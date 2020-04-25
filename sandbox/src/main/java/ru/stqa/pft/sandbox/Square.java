@@ -8,4 +8,10 @@ public class Square {
   public  Square(double l) {
     this.l = l;
   }
+
+  // Лекция 1.8. Повторяем урок
+  public double area(){
+    return  this.l * this.l;
+  }
+
 }

@@ -10,10 +10,10 @@ public class MyFirstProgram {
 
 		// Лекция 1.8. Повторяем урок
 		Square s = new Square(5);
-		System.out.println("Площадь квадрата со стороной " + s.l + " = " + area(s));
+		System.out.println("Площадь квадрата со стороной " + s.l + " = " + s.area());
 
 		Rectangle r =  new Rectangle(4,6);
-		System.out.println("Площадь прямоугольника со сторонами " + r.a + " и " + r.b + " = " + area(r));
+		System.out.println("Площадь прямоугольника со сторонами " + r.a + " и " + r.b + " = " + r.area());
 
 		// Лекция 1.5. Повторяем урок
 		//double l = 8;
@@ -26,13 +26,4 @@ public class MyFirstProgram {
 		System.out.println("Hello, " +  somebody + "!");
 	}
 
-	// Лекция 1.8. Повторяем урок
-	public static double area(Square s){
-		return  s.l * s.l;
-	}
-
-	// Лекция 1.7. Повторяем урок
-	public static double area(Rectangle r){
-		return  r.a * r.b;
-	}
 }
