@@ -3,11 +3,13 @@ package ru.stqa.pft.sandbox;
 public class MyFirstProgram {
 
 	public static void main(String[] args) {
-		System.out.println("Hello, world!");
+		// Лекция 1.5. Повторяем урок
+		String somebody = "world";
+		System.out.println("Hello, " +  somebody + "!");
 
-		// Лекция 1.4. Повторяем урок
-		int l = 8;
-		int s = l * l;
+		// Лекция 1.5. Повторяем урок
+		double l = 8;
+		double s = l * l;
 		System.out.println("Площадь квадрата со стороной " + l + " = " + s);
 	}
 	
