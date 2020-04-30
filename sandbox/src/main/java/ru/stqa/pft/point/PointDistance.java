@@ -8,6 +8,9 @@ public class PointDistance {
 
     System.out.println("Кооридинаты первой точки = " + p1.x + "; " + p1.y);
     System.out.println("Кооридинаты второй точки = " + p2.x + "; " + p2.y);
+    //Вариант 1
+    System.out.println("Расстояние между точками = " + p1.distance(p2));
+    //Вариант 2
     System.out.println("Расстояние между точками = " + p1.distance(p1, p2));
 
   }

@@ -9,6 +9,9 @@ public class PointTests {
   public void testPoint(){
     Point a = new Point(2, 8);
     Point b = new Point(8, 16);
+    // Вариант 1
+    Assert.assertEquals(a.distance(b), 10.0);
+    // Вариант 2
     Assert.assertEquals(a.distance(a, b), 10.0);
   }
 }
