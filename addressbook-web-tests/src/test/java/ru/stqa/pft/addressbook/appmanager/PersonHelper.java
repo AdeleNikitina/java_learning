@@ -19,26 +19,26 @@ public class PersonHelper extends HelperBase {
   }
 
   // Заполнение ФИО пользователя
-  public void addPersonalInfo(PersonalData personalData) {
+  public void fillPersonalInfo(PersonalData personalData) {
     type(By.name("firstname"), personalData.getFirstname());
     type(By.name("middlename"), personalData.getMiddlename());
     type(By.name("lastname"), personalData.getLastname());
   }
 
   // Добавить прозвище
-  public void addNickname(String nickname) {
+  public void fillNickname(String nickname) {
     type(By.name("nickname"), nickname);
   }
 
   // Добавить контактные данные
-  public void addContactInfo(ContactData contactData) {
+  public void fillContactInfo(ContactData contactData) {
     type(By.name("address"), contactData.getAddress());
     type(By.name("mobile"), contactData.getMobile());
     type(By.name("email"), contactData.getEmail());
   }
 
   // Добавить информацию о дне рождения
-  public void addBirthdayInfo(BirthdayInfo birthdayInfo) {
+  public void fillBirthdayInfo(BirthdayInfo birthdayInfo) {
     new Select(webDriver.findElement(By.name("bday"))).selectByVisibleText(birthdayInfo.getBday());
     new Select(webDriver.findElement(By.name("bmonth"))).selectByVisibleText(birthdayInfo.getBmonth());
     type(By.name("byear"), birthdayInfo.getByear());
@@ -48,4 +48,30 @@ public class PersonHelper extends HelperBase {
   public void savePerson() {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
+
+  // Переход на страницу редактирования контакта
+  public void editPerson() {
+    click(By.xpath("(//img[@alt='Edit'])[1]"));
+  }
+
+  // Обновить контакт
+  public void updatePerson() {
+    click(By.xpath("(//input[@name='update'])[2]"));
+  }
+
+  // Выбор первого контакта из списка
+  public void selectContact() {
+    click(By.name("selected[]"));
+  }
+
+  // Удалить контакт через страницу редактирования контакта
+  public void deletePerson() {
+    click(By.xpath("(//input[@value='Delete'])"));
+  }
+
+  // Потверждение удаления контакта
+  public void acceptDeletionContact() {
+    accept();
+  }
+
 }

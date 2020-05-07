@@ -42,4 +42,13 @@ public class GroupHelper extends HelperBase {
     click(By.linkText("groups"));
   }
 
+  // Инициировать изменение группы
+  public void initGroupModification() {
+    click(By.name("edit"));
+  }
+
+  // Подтвердить изменение группы
+  public void submitGroupModification() {
+    click(By.name("update"));
+  }
 }

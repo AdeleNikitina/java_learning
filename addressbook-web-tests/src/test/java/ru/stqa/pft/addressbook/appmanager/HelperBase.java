@@ -20,4 +20,8 @@ public class HelperBase {
     webDriver.findElement(locator).sendKeys(text);
   }
 
+  public void accept() {
+    webDriver.switchTo().alert().accept();
+  }
+
 }
