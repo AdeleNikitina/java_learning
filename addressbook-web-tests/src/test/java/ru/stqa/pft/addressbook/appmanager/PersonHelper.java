@@ -2,7 +2,6 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.BirthdayInfo;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.PersonalData;
@@ -39,8 +38,8 @@ public class PersonHelper extends HelperBase {
 
   // Добавить информацию о дне рождения
   public void fillBirthdayInfo(BirthdayInfo birthdayInfo) {
-    new Select(webDriver.findElement(By.name("bday"))).selectByVisibleText(birthdayInfo.getBday());
-    new Select(webDriver.findElement(By.name("bmonth"))).selectByVisibleText(birthdayInfo.getBmonth());
+    select(By.name("bday"), birthdayInfo.getBday());
+    select(By.name("bmonth"), birthdayInfo.getBmonth());
     type(By.name("byear"), birthdayInfo.getByear());
   }
 
