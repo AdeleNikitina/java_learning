@@ -10,15 +10,31 @@ public class NavigationHelper extends HelperBase {
   }
 
   public void goToGroupPage(String groups) {
-    click(By.linkText(groups));
+    if (isElementPresent(By.tagName("h1"))
+            && webDriver.findElement(By.tagName("h1")).getText().equals("Groups")
+            && isElementPresent(By.name("new"))) {
+      return;
+    } else {
+      click(By.linkText(groups));
+    }
   }
 
   public void goToHomePage() {
-    click(By.linkText("home page"));
+    if (isElementPresent(By.id("maintable")))
+    {
+      return;
+    } else {
+      click(By.linkText("home page"));
+    }
   }
 
   public void goToHomePageFromMenu() {
-  click(By.xpath("//a[contains(text(),'home')]"));
+    if (isElementPresent(By.id("maintable")))
+    {
+      return;
+    } else {
+      click(By.xpath("//a[contains(text(),'home')]"));
+    }
   }
 
 }
