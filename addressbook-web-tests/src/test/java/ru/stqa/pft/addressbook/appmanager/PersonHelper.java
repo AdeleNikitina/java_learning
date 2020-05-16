@@ -14,7 +14,7 @@ public class PersonHelper extends HelperBase {
   }
 
   // Инициировать создание нового контакта
-  public void createPerson() {
+  public void initCreatePerson() {
    click(By.linkText("add new"));
   }
 
@@ -79,4 +79,15 @@ public class PersonHelper extends HelperBase {
     accept();
   }
 
+  // Заполнение данных пользователя
+  public void fillPersonFullData(PersonalData personalData, boolean b, ContactData contactData, BirthdayInfo birthdayInfo) {
+    fillPersonalInfo(personalData, b);
+    fillNickname("Nickname");
+    fillContactInfo(contactData);
+    fillBirthdayInfo(birthdayInfo);
+  }
+
+  public boolean isThereAPerson() {
+    return isElementPresent(By.name("selected[]"));
+  }
 }
