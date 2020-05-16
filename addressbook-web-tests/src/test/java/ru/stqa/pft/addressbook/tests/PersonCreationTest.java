@@ -10,7 +10,7 @@ public class PersonCreationTest extends TestBase {
   @Test
   public void testPersonCreation() throws Exception {
     app.getPersonHelper().createPerson();
-    app.getPersonHelper().fillPersonalInfo(new PersonalData("FirstName", "MiddleName", "LastName"));
+    app.getPersonHelper().fillPersonalInfo(new PersonalData("FirstName", "MiddleName", "LastName", "TestGroup1"), true);
     app.getPersonHelper().fillNickname("Nickname");
     app.getPersonHelper().fillContactInfo(new ContactData("Address 10", "79000000000", "test@test.ru"));
     app.getPersonHelper().fillBirthdayInfo(new BirthdayInfo("1","January", "1980"));

@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 
@@ -34,4 +35,12 @@ public class HelperBase {
     new Select(webDriver.findElement(locator)).selectByVisibleText(text);
   }
 
+  protected boolean isElementPresent(By locator) {
+    try {
+      webDriver.findElement(locator);
+      return true;
+    } catch (NoSuchElementException ex) {
+      return false;
+    }
+  }
 }

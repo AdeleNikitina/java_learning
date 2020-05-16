@@ -2,6 +2,7 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.BirthdayInfo;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.PersonalData;
@@ -18,10 +19,15 @@ public class PersonHelper extends HelperBase {
   }
 
   // Заполнение ФИО пользователя
-  public void fillPersonalInfo(PersonalData personalData) {
+  public void fillPersonalInfo(PersonalData personalData, boolean creation) {
     type(By.name("firstname"), personalData.getFirstname());
     type(By.name("middlename"), personalData.getMiddlename());
     type(By.name("lastname"), personalData.getLastname());
+    if (creation) {
+      select(By.name("new_group"), personalData.getGroup());
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
   }
 
   // Добавить прозвище
