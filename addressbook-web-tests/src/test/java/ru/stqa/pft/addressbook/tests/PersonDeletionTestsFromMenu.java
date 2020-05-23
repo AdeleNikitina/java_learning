@@ -3,10 +3,8 @@ package ru.stqa.pft.addressbook.tests;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ru.stqa.pft.addressbook.model.BirthdayInfo;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
-import ru.stqa.pft.addressbook.model.PersonalData;
 
 public class PersonDeletionTestsFromMenu extends TestBase {
   private WebDriver webDriver;
@@ -24,9 +22,9 @@ public class PersonDeletionTestsFromMenu extends TestBase {
     if (! app.getPersonHelper().isThereAPerson())
     {
       app.getPersonHelper().initCreatePerson();
-      app.getPersonHelper().fillPersonFullData(new PersonalData("FirstName", "MiddleName", "LastName", "TestGroup1"), true,
-              new ContactData("Address 10", "79000000000", "test@test.ru"),
-              new BirthdayInfo("1","January", "1980"));
+      app.getPersonHelper().fillPersonalInfo(new ContactData
+                                            ("FirstName", "MiddleName", "LastName", "TestGroup1",
+                                             "Address 10", "79000000000", "test@test.ru"), true);
       app.getPersonHelper().savePerson();
       app.getNavigationHelper().goToHomePage();
     }

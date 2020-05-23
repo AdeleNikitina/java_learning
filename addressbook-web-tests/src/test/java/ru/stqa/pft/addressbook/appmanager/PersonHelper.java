@@ -3,9 +3,7 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import ru.stqa.pft.addressbook.model.BirthdayInfo;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.PersonalData;
 
 public class PersonHelper extends HelperBase {
 
@@ -19,12 +17,15 @@ public class PersonHelper extends HelperBase {
   }
 
   // Заполнение ФИО пользователя
-  public void fillPersonalInfo(PersonalData personalData, boolean creation) {
-    type(By.name("firstname"), personalData.getFirstname());
-    type(By.name("middlename"), personalData.getMiddlename());
-    type(By.name("lastname"), personalData.getLastname());
+  public void fillPersonalInfo(ContactData contactData, boolean creation) {
+    type(By.name("firstname"), contactData.getFirstname());
+    type(By.name("middlename"), contactData.getMiddlename());
+    type(By.name("lastname"), contactData.getLastname());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("mobile"), contactData.getMobile());
+    type(By.name("email"), contactData.getEmail());
     if (creation) {
-      select(By.name("new_group"), personalData.getGroup());
+      select(By.name("new_group"), contactData.getGroup());
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -33,20 +34,6 @@ public class PersonHelper extends HelperBase {
   // Добавить прозвище
   public void fillNickname(String nickname) {
     type(By.name("nickname"), nickname);
-  }
-
-  // Добавить контактные данные
-  public void fillContactInfo(ContactData contactData) {
-    type(By.name("address"), contactData.getAddress());
-    type(By.name("mobile"), contactData.getMobile());
-    type(By.name("email"), contactData.getEmail());
-  }
-
-  // Добавить информацию о дне рождения
-  public void fillBirthdayInfo(BirthdayInfo birthdayInfo) {
-    select(By.name("bday"), birthdayInfo.getBday());
-    select(By.name("bmonth"), birthdayInfo.getBmonth());
-    type(By.name("byear"), birthdayInfo.getByear());
   }
 
   // Сохранить контакт
@@ -77,14 +64,6 @@ public class PersonHelper extends HelperBase {
   // Потверждение удаления контакта
   public void acceptDeletionContact() {
     accept();
-  }
-
-  // Заполнение данных пользователя
-  public void fillPersonFullData(PersonalData personalData, boolean b, ContactData contactData, BirthdayInfo birthdayInfo) {
-    fillPersonalInfo(personalData, b);
-    fillNickname("Nickname");
-    fillContactInfo(contactData);
-    fillBirthdayInfo(birthdayInfo);
   }
 
   public boolean isThereAPerson() {
