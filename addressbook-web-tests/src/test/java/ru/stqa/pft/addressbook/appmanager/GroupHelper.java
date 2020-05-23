@@ -28,8 +28,8 @@ public class GroupHelper extends HelperBase {
   }
 
   // Выбрать группу
-  public void selectGroup() {
-    click(By.name("selected[]"));
+  public void selectGroup(int index) {
+    webDriver.findElements(By.name("selected[]")).get(index).click();
   }
 
   // Удалить выбранную группу
