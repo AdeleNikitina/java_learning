@@ -46,8 +46,9 @@ public class ContactHelper extends HelperBase {
   }
 
   // Переход на страницу редактирования контакта
-  public void editContact() {
-    click(By.xpath("(//img[@alt='Edit'])[1]"));
+  public void editContact(int index) {
+    int i = index + 1;
+    click(By.xpath("(//img[@alt='Edit'])[" + i + "]"));
   }
 
   // Обновить контакт

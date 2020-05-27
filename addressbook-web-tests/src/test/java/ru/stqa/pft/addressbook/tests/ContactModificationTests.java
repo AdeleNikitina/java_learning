@@ -32,7 +32,7 @@ public class ContactModificationTests extends TestBase {
       app.getNavigationHelper().goToHomePage();
     }
     List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().editContact();
+    app.getContactHelper().editContact(before.size() - 1);
     ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"FirstName_new", "MiddleName_new", "LastName_new", "TestGroup1",
                     "Address 10", "79000000000", "test@test.ru");
     app.getContactHelper().fillContactInfo(contact, false);

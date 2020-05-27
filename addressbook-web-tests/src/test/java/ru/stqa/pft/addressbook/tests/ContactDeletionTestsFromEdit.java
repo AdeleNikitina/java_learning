@@ -30,7 +30,7 @@ public class ContactDeletionTestsFromEdit extends TestBase {
       app.getNavigationHelper().goToHomePage();
     }
     List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().editContact();
+    app.getContactHelper().editContact(before.size() - 1);
     app.getContactHelper().deleteContact();
     app.getNavigationHelper().goToHomePageFromMenu();
     List<ContactData> after = app.getContactHelper().getContactList();
