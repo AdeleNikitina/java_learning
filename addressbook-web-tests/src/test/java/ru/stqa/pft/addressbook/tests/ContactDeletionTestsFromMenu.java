@@ -19,7 +19,7 @@ public class ContactDeletionTestsFromMenu extends TestBase {
   //}
 
   // Удаление через главную страницу
-  @Test
+  @Test (enabled = false)
   public void testContactDeletionFromMenu() throws Exception {
     if (! app.getContactHelper().isThereAContact())
     {
