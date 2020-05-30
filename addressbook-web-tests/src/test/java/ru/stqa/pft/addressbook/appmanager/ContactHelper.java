@@ -15,12 +15,33 @@ public class ContactHelper extends HelperBase {
     super(webDriver);
   }
 
+  // Создание контакта
+  public void create() {
+    initCreateContact();
+    fillContactInfo(new ContactData("FirstName", "MiddleName", "LastName",
+            "TestGroup1", "Address 10", "79000000000", "test@test.ru"), true);
+    save();
+  }
+
+  // Редактирование контакта
+  public void modify(int index, ContactData contact) {
+    editContact(index);
+    fillContactInfo(contact, false);
+    fillNickname("Nickname");
+    updateContact();
+  }
+
+  // Удаление контакта
+  public void deleteContact() {
+    click(By.xpath("(//input[@value='Delete'])"));
+  }
+
   // Инициировать создание нового контакта
   public void initCreateContact() {
    click(By.linkText("add new"));
   }
 
-  // Заполнение ФИО пользователя
+  // Заполнение ФИО пользователя и контактных данных
   public void fillContactInfo(ContactData contactData, boolean creation) {
     type(By.name("firstname"), contactData.getFirstname());
     type(By.name("middlename"), contactData.getMiddlename());
@@ -41,7 +62,7 @@ public class ContactHelper extends HelperBase {
   }
 
   // Сохранить контакт
-  public void saveContact() {
+  public void save() {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
 
@@ -61,11 +82,6 @@ public class ContactHelper extends HelperBase {
     webDriver.findElements(By.name("selected[]")).get(index).click();
   }
 
-  // Удалить контакт через страницу редактирования контакта
-  public void deleteContact() {
-    click(By.xpath("(//input[@value='Delete'])"));
-  }
-
   // Потверждение удаления контакта
   public void acceptDeletionContact() {
     accept();
@@ -75,7 +91,7 @@ public class ContactHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
-  public List<ContactData> getContactList(){
+  public List<ContactData> list(){
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements = webDriver.findElements(By.xpath("//tr[@name='entry']"));
     for (WebElement element : elements) {
@@ -88,4 +104,5 @@ public class ContactHelper extends HelperBase {
     }
     return contacts;
   }
+
 }

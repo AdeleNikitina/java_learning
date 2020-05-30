@@ -14,13 +14,37 @@ public class GroupHelper extends HelperBase {
     super(webDriver);
   }
 
+  // Создание группы
+  public void create(GroupData group) {
+    initGroupCreation();
+    fillForm(group);
+    submitGroupCreation();
+    returnToGroupPage();
+  }
+
+  // Изменение группы
+  public void modify(int index, GroupData group) {
+    select(index);
+    initGroupModification();
+    fillForm(group);
+    submitGroupModification();
+    returnToGroupPage();
+  }
+
+  // Удаление группы
+  public void delete(int index) {
+    select(index);
+    deleteSelectedGroup();
+    returnToGroupPage();
+  }
+
   // Инициировать создание группы
   public void initGroupCreation() {
     click(By.name("new"));
   }
 
   // Заполнить информацию о группе
-  public void fillGroupForm(GroupData groupData) {
+  public void fillForm(GroupData groupData) {
     type(By.name("group_name"), groupData.getName());
     type(By.name("group_header"), groupData.getHeader());
     type(By.name("group_footer"), groupData.getFooter());
@@ -32,7 +56,7 @@ public class GroupHelper extends HelperBase {
   }
 
   // Выбрать группу
-  public void selectGroup(int index) {
+  public void select(int index) {
     webDriver.findElements(By.name("selected[]")).get(index).click();
   }
 
@@ -56,22 +80,6 @@ public class GroupHelper extends HelperBase {
     click(By.name("update"));
   }
 
-  // Создание группы
-  public void createGroup(GroupData group) {
-    initGroupCreation();
-    fillGroupForm(group);
-    submitGroupCreation();
-    returnToGroupPage();
-  }
-
-  public void modifyGroup(int index, GroupData group) {
-    selectGroup(index);
-    initGroupModification();
-    fillGroupForm(group);
-    submitGroupModification();
-    returnToGroupPage();
-  }
-
   public boolean isThereAGroup() {
     return isElementPresent(By.name("selected[]"));
   }
@@ -80,7 +88,7 @@ public class GroupHelper extends HelperBase {
     return webDriver.findElements(By.name("selected[]")).size();
   }
 
-  public List<GroupData> getGroupList() {
+  public List<GroupData> list() {
     List<GroupData> groups = new ArrayList<GroupData>();
     List<WebElement> elements = webDriver.findElements(By.cssSelector("span.group"));
     for (WebElement element : elements) {

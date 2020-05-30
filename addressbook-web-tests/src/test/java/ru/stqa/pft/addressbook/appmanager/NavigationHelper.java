@@ -9,7 +9,7 @@ public class NavigationHelper extends HelperBase {
     super(webDriver);
   }
 
-  public void goToGroupPage(String groups) {
+  public void groupPage(String groups) {
     if (isElementPresent(By.tagName("h1"))
             && webDriver.findElement(By.tagName("h1")).getText().equals("Groups")
             && isElementPresent(By.name("new"))) {
@@ -19,7 +19,7 @@ public class NavigationHelper extends HelperBase {
     }
   }
 
-  public void goToHomePage() {
+  public void HomePage() {
     if (isElementPresent(By.id("maintable")))
     {
       return;
@@ -28,7 +28,7 @@ public class NavigationHelper extends HelperBase {
     }
   }
 
-  public void goToHomePageFromMenu() {
+  public void HomePageFromMenu() {
     if (isElementPresent(By.id("maintable")))
     {
       return;
