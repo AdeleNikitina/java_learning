@@ -18,8 +18,10 @@ public class ContactHelper extends HelperBase {
   // Создание контакта
   public void create() {
     initCreateContact();
-    fillContactInfo(new ContactData("FirstName", "MiddleName", "LastName",
-            "TestGroup1", "Address 10", "79000000000", "test@test.ru"), true);
+    fillContactInfo(new ContactData().
+            withFirstname("FirstName").withMiddlename("MiddleName").withLastname("LastName").
+            withGroup("TestGroup1").
+            withAddress("Address 10").withMobile("79000000000").withEmail("test@test.ru"), true);
     save();
   }
 
@@ -99,8 +101,7 @@ public class ContactHelper extends HelperBase {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       String lastname = cells.get(1).getText();
       String firstname = cells.get(2).getText();
-      ContactData contact = new ContactData(id, firstname, null, lastname, null, null, null, null);
-      contacts.add(contact);
+      contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
     }
     return contacts;
   }

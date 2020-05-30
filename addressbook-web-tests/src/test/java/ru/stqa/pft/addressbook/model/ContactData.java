@@ -4,45 +4,56 @@ import java.util.Objects;
 
 public class ContactData {
   private int id;
-  private final String firstname;
-  private final String middlename;
-  private final String lastname;
+  private String firstname;
+  private String middlename;
+  private String lastname;
   private String group;
-  private final String address;
-  private final String mobile;
-  private final String email;
+  private String address;
+  private String mobile;
+  private String email;
 
-
-  public ContactData (int id, String firstname, String middlename,  String lastname, String group,
-                      String address, String mobile, String email) {
+  public ContactData withId(int id) {
     this.id = id;
-    this.firstname = firstname;
-    this.middlename = middlename;
-    this.lastname = lastname;
-    this.group = group;
-    this.address = address;
-    this.mobile = mobile;
-    this.email = email;
+    return this;
   }
 
-  public ContactData (String firstname, String middlename, String lastname, String group,
-                      String address, String mobile, String email) {
-    this.id = Integer.MAX_VALUE;
+  public ContactData withFirstname(String firstname) {
     this.firstname = firstname;
+    return this;
+  }
+
+  public ContactData withMiddlename(String middlename) {
     this.middlename = middlename;
+    return this;
+  }
+
+  public ContactData withLastname(String lastname) {
     this.lastname = lastname;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
     this.group = group;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
     this.address = address;
+    return this;
+  }
+
+  public ContactData withMobile(String mobile) {
     this.mobile = mobile;
+    return this;
+  }
+
+  public ContactData withEmail(String email) {
     this.email = email;
+    return this;
   }
 
   public int getId() {
     return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public String getFirstname() { return firstname; }

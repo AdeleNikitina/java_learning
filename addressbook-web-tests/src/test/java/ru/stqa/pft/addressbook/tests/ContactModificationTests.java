@@ -24,8 +24,11 @@ public class ContactModificationTests extends TestBase {
   public void testPersonModification() throws Exception {
     List<ContactData> before = app.contact().list();
     int index = before.size() - 1;
-    ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"FirstName_new", "MiddleName_new", "LastName_new", "TestGroup1",
-            "Address 10", "79000000000", "test@test.ru");
+    ContactData contact = new ContactData().
+            withId(before.get(index).getId()).
+            withFirstname("FirstName_new").withMiddlename("MiddleName_new").withLastname("LastName_new").
+            withGroup("TestGroup1").
+            withAddress("Address 10").withMobile("79000000000").withEmail("test@test.ru");
     app.contact().modify(index, contact);
     app.goTo().HomePage();
     List<ContactData> after = app.contact().list();
