@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class ContactDeletionTestsFromMenu extends TestBase {
   private WebDriver webDriver;
@@ -19,7 +18,7 @@ public class ContactDeletionTestsFromMenu extends TestBase {
   //}
 
   // Удаление через главную страницу
-  @Test (enabled = false)
+  @Test
   public void testContactDeletionFromMenu() throws Exception {
     if (! app.getContactHelper().isThereAContact())
     {
@@ -35,7 +34,6 @@ public class ContactDeletionTestsFromMenu extends TestBase {
     app.getContactHelper().deleteContact();
     app.getContactHelper().acceptDeletionContact();
     app.getNavigationHelper().goToHomePageFromMenu();
-    webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() - 1);
 
