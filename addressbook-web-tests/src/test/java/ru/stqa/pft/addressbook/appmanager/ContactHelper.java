@@ -23,6 +23,7 @@ public class ContactHelper extends HelperBase {
             withGroup("TestGroup1").
             withAddress("Address 10").withMobile("79000000000").withEmail("test@test.ru"), true);
     save();
+    contactCache = null;
   }
 
   // Редактирование контакта
@@ -31,6 +32,7 @@ public class ContactHelper extends HelperBase {
     fillContactInfo(contact, false);
     fillNickname("Nickname");
     updateContact();
+    contactCache = null;
   }
 
   // Удаление контакта через основное меню
@@ -38,12 +40,14 @@ public class ContactHelper extends HelperBase {
     selectContact(contact.getId());
     deleteContact();
     acceptDeletionContact();
+    contactCache = null;
   }
 
   // Удаление контакта через редактирование
   public void deleteFromEdit(ContactData contact) {
     editContact(contact.getId());
     deleteContact();
+    contactCache = null;
   }
 
   // Клик по кнопке
@@ -106,17 +110,22 @@ public class ContactHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
+  private Contacts contactCache = null;
+
   public Contacts all(){
-    Contacts contacts = new Contacts();
+    if (contactCache != null) {
+      return new Contacts(contactCache);
+    }
+    contactCache = new Contacts();
     List<WebElement> elements = webDriver.findElements(By.xpath("//tr[@name='entry']"));
     for (WebElement element : elements) {
       List<WebElement> cells = element.findElements(By.tagName("td"));
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       String lastname = cells.get(1).getText();
       String firstname = cells.get(2).getText();
-      contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
+      contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
     }
-    return contacts;
+    return new Contacts(contactCache);
   }
 
 }
