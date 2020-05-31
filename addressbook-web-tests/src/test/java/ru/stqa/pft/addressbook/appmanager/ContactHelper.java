@@ -7,7 +7,9 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -26,14 +28,27 @@ public class ContactHelper extends HelperBase {
   }
 
   // Редактирование контакта
-  public void modify(int index, ContactData contact) {
-    editContact(index);
+  public void modify(ContactData contact) {
+    editContact(contact.getId());
     fillContactInfo(contact, false);
     fillNickname("Nickname");
     updateContact();
   }
 
-  // Удаление контакта
+  // Удаление контакта через основное меню
+  public void deleteFromMenu(ContactData contact) {
+    selectContact(contact.getId());
+    deleteContact();
+    acceptDeletionContact();
+  }
+
+  // Удаление контакта через редактирование
+  public void deleteFromEdit(ContactData contact) {
+    editContact(contact.getId());
+    deleteContact();
+  }
+
+  // Клик по кнопке
   public void deleteContact() {
     click(By.xpath("(//input[@value='Delete'])"));
   }
@@ -69,9 +84,9 @@ public class ContactHelper extends HelperBase {
   }
 
   // Переход на страницу редактирования контакта
-  public void editContact(int index) {
-    int i = index + 1;
-    click(By.xpath("(//img[@alt='Edit'])[" + i + "]"));
+  public void editContact(int id) {
+    int i = id;
+    webDriver.findElement(By.xpath("(//img[@alt='Edit'])['" + id + "']")).click();
   }
 
   // Обновить контакт
@@ -80,8 +95,8 @@ public class ContactHelper extends HelperBase {
   }
 
   // Выбор первого контакта из списка
-  public void selectContact(int index) {
-    webDriver.findElements(By.name("selected[]")).get(index).click();
+  public void selectContact(int id) {
+    webDriver.findElement(By.cssSelector("input[id ='" + id + "']")).click();
   }
 
   // Потверждение удаления контакта
@@ -95,6 +110,19 @@ public class ContactHelper extends HelperBase {
 
   public List<ContactData> list(){
     List<ContactData> contacts = new ArrayList<ContactData>();
+    List<WebElement> elements = webDriver.findElements(By.xpath("//tr[@name='entry']"));
+    for (WebElement element : elements) {
+      List<WebElement> cells = element.findElements(By.tagName("td"));
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+      String lastname = cells.get(1).getText();
+      String firstname = cells.get(2).getText();
+      contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
+    }
+    return contacts;
+  }
+
+  public Set<ContactData> all(){
+    Set<ContactData> contacts = new HashSet<ContactData>();
     List<WebElement> elements = webDriver.findElements(By.xpath("//tr[@name='entry']"));
     for (WebElement element : elements) {
       List<WebElement> cells = element.findElements(By.tagName("td"));
