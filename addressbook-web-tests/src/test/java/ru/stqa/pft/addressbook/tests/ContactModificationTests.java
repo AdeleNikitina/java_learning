@@ -13,17 +13,16 @@ public class ContactModificationTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    if (app.contact().list().size() == 0) {
+    if (app.contact().all().size() == 0) {
       app.contact().create();
       app.goTo().HomePage();
     }
   }
   
   @Test
-  public void testPersonModification() throws Exception {
+  public void testContactModification() throws Exception {
     Set<ContactData> before = app.contact().all();
     ContactData modifiedContact = before.iterator().next();
-    int index = before.size() - 1;
     ContactData contact = new ContactData().
             withId(modifiedContact.getId()).
             withFirstname("FirstName_new").withMiddlename("MiddleName_new").withLastname("LastName_new").
