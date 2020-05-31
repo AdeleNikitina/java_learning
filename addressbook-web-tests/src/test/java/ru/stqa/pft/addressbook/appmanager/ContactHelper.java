@@ -110,6 +110,10 @@ public class ContactHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
+  public int count() {
+    return webDriver.findElements(By.name("selected[]")).size();
+  }
+
   private Contacts contactCache = null;
 
   public Contacts all(){
