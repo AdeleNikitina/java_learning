@@ -85,6 +85,18 @@ public class ContactData {
 
   public String getEmail() { return email; }
 
+  public String getWorkPhone() {
+    return workPhone;
+  }
+
+  public String getHomePhone() {
+    return homePhone;
+  }
+
+  public void setHomePhone(String homePhone) {
+    this.homePhone = homePhone;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
