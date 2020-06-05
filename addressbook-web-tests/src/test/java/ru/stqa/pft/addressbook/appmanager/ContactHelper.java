@@ -28,7 +28,7 @@ public class ContactHelper extends HelperBase {
 
   // Редактирование контакта
   public void modify(ContactData contact) {
-    editContact(contact.getId());
+    editContact(contact);
     fillContactInfo(contact, false);
     fillNickname("Nickname");
     updateContact();
@@ -45,7 +45,7 @@ public class ContactHelper extends HelperBase {
 
   // Удаление контакта через редактирование
   public void deleteFromEdit(ContactData contact) {
-    editContact(contact.getId());
+    editContact(contact);
     deleteContact();
     contactCache = null;
   }
@@ -86,9 +86,8 @@ public class ContactHelper extends HelperBase {
   }
 
   // Переход на страницу редактирования контакта
-  public void editContact(int id) {
-    int i = id;
-    webDriver.findElement(By.xpath("(//img[@alt='Edit'])['" + id + "']")).click();
+  public void editContact(ContactData contact) {
+    webDriver.findElement(By.xpath("(//img[@alt='Edit'])['" + contact.getId() + "']")).click();
   }
 
   // Обновить контакт
