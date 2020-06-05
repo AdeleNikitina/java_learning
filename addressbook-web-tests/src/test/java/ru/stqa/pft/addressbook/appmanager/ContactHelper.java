@@ -117,13 +117,20 @@ public class ContactHelper extends HelperBase {
     initContactModificationById(contact.getId());
     String firstname = webDriver.findElement(By.name("firstname")).getAttribute("value");
     String lastname = webDriver.findElement(By.name("lastname")).getAttribute("value");
-    String home = webDriver.findElement(By.name("home")).getAttribute("value");
-    String mobile = webDriver.findElement(By.name("mobile")).getAttribute("value");
-    String work = webDriver.findElement(By.name("work")).getAttribute("value");
+    String address = webDriver.findElement(By.name("address")).getAttribute("value");
+    String homePhone = webDriver.findElement(By.name("home")).getAttribute("value");
+    String mobilePhone = webDriver.findElement(By.name("mobile")).getAttribute("value");
+    String workPhone = webDriver.findElement(By.name("work")).getAttribute("value");
+    String email = webDriver.findElement(By.name("email")).getAttribute("value");
+    String email2 = webDriver.findElement(By.name("email2")).getAttribute("value");
+    String email3 = webDriver.findElement(By.name("email3")).getAttribute("value");
     webDriver.navigate().back();
     return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
-            .withHomePhone(home).withMobile(mobile).withWorkPhone(work);
+            .withAddress(address)
+            .withHomePhone(homePhone).withMobile(mobilePhone).withWorkPhone(workPhone)
+            .withEmail(email).withEmail2(email2).withEmail3(email3);
   }
+
 
   private void initContactModificationById(int id) {
     WebElement checkbox = webDriver.findElement(By.cssSelector(String.format("input[value='%s']", id)));
@@ -149,9 +156,12 @@ public class ContactHelper extends HelperBase {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       String lastname = cells.get(1).getText();
       String firstname = cells.get(2).getText();
+      String address = cells.get(3).getText();
+      String allEmails = cells.get(4).getText();
       String allPhones = cells.get(5).getText();
-      contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
-              .withAllPhones(allPhones));
+            contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
+                    .withAddress(address)
+                    .withAllPhones(allPhones).withAllEmails(allEmails));
     }
     return new Contacts(contactCache);
   }
