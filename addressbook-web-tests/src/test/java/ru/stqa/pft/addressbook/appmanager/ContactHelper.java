@@ -7,6 +7,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.File;
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
@@ -18,9 +19,10 @@ public class ContactHelper extends HelperBase {
   // Создание контакта
   public void create() {
     initCreateContact();
+    File photo = new File("src/test/resources/stru.png");
     fillContactInfo(new ContactData().
             withFirstname("FirstName").withMiddlename("MiddleName").withLastname("LastName").
-            withGroup("TestGroup1").
+            withGroup("TestGroup1").withPhoto(photo).
             withAddress("Address 10").withMobile("79000000000").withEmail("test@test.ru"), true);
     save();
     contactCache = null;
@@ -68,6 +70,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("address"), contactData.getAddress());
     type(By.name("mobile"), contactData.getMobile());
     type(By.name("email"), contactData.getEmail());
+    attach(By.name("photo"), contactData.getPhoto());
     if (creation) {
       select(By.name("new_group"), contactData.getGroup());
     } else {
