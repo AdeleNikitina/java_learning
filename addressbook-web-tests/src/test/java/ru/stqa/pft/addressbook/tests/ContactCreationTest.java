@@ -15,7 +15,7 @@ public class ContactCreationTest extends TestBase {
 
   @BeforeMethod (enabled = false)
   public void testGroupCreation() throws Exception {
-    app.goTo().groupPage("groups");
+    app.goTo().groupPage();
     app.group().create(new GroupData().withName("TestGroup1"));
   }
 
