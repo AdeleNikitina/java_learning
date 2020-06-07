@@ -15,7 +15,10 @@ public class ContactDeletionTestsFromMenu extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() {
     if (app.contact().all().size() == 0) {
-      app.contact().create();
+      app.contact().create(new ContactData()
+              .withFirstname("FirstName").withMiddlename("MiddleName").withLastname("LastName")
+              .withGroup("TestGroup1")
+              .withAddress("Address 10").withMobile("79000000000").withEmail("test@test.ru"));
       app.goTo().HomePage();
     }
   }

@@ -17,13 +17,10 @@ public class ContactHelper extends HelperBase {
   }
 
   // Создание контакта
-  public void create() {
+  public void create(ContactData contact) {
     initCreateContact();
     File photo = new File("src/test/resources/stru.png");
-    fillContactInfo(new ContactData().
-            withFirstname("FirstName").withMiddlename("MiddleName").withLastname("LastName").
-            withGroup("TestGroup1").withPhoto(photo).
-            withAddress("Address 10").withMobile("79000000000").withEmail("test@test.ru"), true);
+    fillContactInfo(contact, true);
     save();
     contactCache = null;
   }
