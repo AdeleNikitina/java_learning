@@ -5,18 +5,27 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactDeletionTestsFromEdit extends TestBase {
 
+  private Properties properties;
+
   @BeforeMethod
-  public void ensurePreconditions() {
+  public void ensurePreconditions() throws IOException {
+    properties = new Properties();
+    properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
     if (app.contact().all().size() == 0) {
       app.contact().create(new ContactData()
-              .withFirstname("FirstName").withMiddlename("MiddleName").withLastname("LastName")
-              .withGroup("TestGroup1")
-              .withAddress("Address 10").withMobile("79000000000").withEmail("test@test.ru"));
+              .withFirstname(properties.getProperty("web.firstName")).withMiddlename(properties.getProperty("web.middleName")).withLastname(properties.getProperty("web.lastName"))
+              .withGroup(properties.getProperty("web.testGroupName"))
+              .withAddress(properties.getProperty("web.address")).withMobile(properties.getProperty("web.mobile")).withEmail(properties.getProperty("web.email")));
       app.goTo().HomePage();
     }
   }

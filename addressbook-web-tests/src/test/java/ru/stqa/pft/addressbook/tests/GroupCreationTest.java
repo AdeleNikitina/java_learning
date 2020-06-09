@@ -15,12 +15,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTest extends TestBase {
+
+  private Properties properties;
 
   @DataProvider
   public Iterator<Object[]> validGroups() throws IOException {
@@ -80,9 +83,11 @@ public class GroupCreationTest extends TestBase {
 
   @Test
   public void testBadGroupCreation() throws Exception {
+    properties = new Properties();
+    properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
     app.goTo().groupPage();
     Groups before = app.group().all();
-    GroupData group = new GroupData().withName("TestGroup1'");
+    GroupData group = new GroupData().withName(properties.getProperty("web.badGroupName"));
     app.group().create(group);
     assertThat(app.group().count(), equalTo(before.size()));
     Groups after = app.group().all();

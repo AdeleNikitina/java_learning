@@ -8,28 +8,37 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 public class ContactHelper extends HelperBase {
+
+  private Properties properties;
 
   public ContactHelper (WebDriver webDriver) {
     super(webDriver);
   }
 
   // Создание контакта
-  public void create(ContactData contact) {
+  public void create(ContactData contact) throws IOException {
+    properties = new Properties();
+    properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
     initCreateContact();
-    File photo = new File("src/test/resources/stru.png");
+    File photo = new File(properties.getProperty("web.File"));
     fillContactInfo(contact, true);
     save();
     contactCache = null;
   }
 
   // Редактирование контакта
-  public void modify(ContactData contact) {
+  public void modify(ContactData contact) throws IOException {
+    properties = new Properties();
+    properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
     editContact(contact);
     fillContactInfo(contact, false);
-    fillNickname("Nickname");
+    fillNickname(properties.getProperty("web.nickname"));
     updateContact();
     contactCache = null;
   }
