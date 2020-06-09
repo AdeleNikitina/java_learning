@@ -13,8 +13,16 @@ dependencies {
     compile 'com.thoughtworks.xstream:xstream:1.4.8'
 }
 
-test {
-    useTestNG()
+task testGroups(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-groups.xml'
+    }
+}
+
+task testContacts(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-contacts.xml'
+    }
 }
 
 tasks.withType(JavaCompile) {
