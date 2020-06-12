@@ -194,7 +194,7 @@ public class ContactHelper extends HelperBase {
   {
     webDriver.findElement(By.name("add")).click();
   }
-  
+
   private void clickRemoteFromGroup() {
     webDriver.findElement(By.name("remove")).click();
   }
