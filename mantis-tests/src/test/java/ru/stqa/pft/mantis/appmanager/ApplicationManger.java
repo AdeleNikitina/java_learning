@@ -13,9 +13,10 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManger {
-  public WebDriver webDriver;
+  private WebDriver webDriver;
   private final Properties properties;
   private String browser;
+  private RegistrationHelper registrationHelper;
 
   public ApplicationManger(String browser) {
     this.browser = browser;
@@ -25,19 +26,12 @@ public class ApplicationManger {
   public void init() throws IOException {
     String target = System.getProperty("target","local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-    if (browser.equals(BrowserType.FIREFOX)) {
-      webDriver = new FirefoxDriver();
-    } else if (browser.equals(BrowserType.CHROME)) {
-      webDriver = new ChromeDriver();
-    } else if (browser.equals(BrowserType.IE)) {
-      webDriver = new InternetExplorerDriver();
-    }
-    webDriver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-    webDriver.get(properties.getProperty("web.baseUrl"));
   }
 
    public void stop() {
-    webDriver.quit();
+    if (webDriver != null) {
+      webDriver.quit();
+    }
   }
 
   public HttpSession newSession() {
@@ -46,5 +40,27 @@ public class ApplicationManger {
 
   public String getProperty(String key) {
     return properties.getProperty(key);
+  }
+
+  public RegistrationHelper registration() {
+    if (registrationHelper == null) {
+      registrationHelper = new RegistrationHelper(this);
+    }
+    return registrationHelper;
+  }
+
+  public WebDriver getDriver() {
+    if (webDriver == null) {
+      if (browser.equals(BrowserType.FIREFOX)) {
+        webDriver = new FirefoxDriver();
+      } else if (browser.equals(BrowserType.CHROME)) {
+        webDriver = new ChromeDriver();
+      } else if (browser.equals(BrowserType.IE)) {
+        webDriver = new InternetExplorerDriver();
+      }
+      webDriver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+      webDriver.get(properties.getProperty("web.baseUrl"));
+    }
+    return webDriver;
   }
 }
