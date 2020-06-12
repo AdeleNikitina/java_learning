@@ -20,7 +20,7 @@ public class ContactModificationTests extends TestBase {
   public void ensurePreconditions() throws IOException {
     properties = new Properties();
     properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
-    if (app.contact().all().size() == 0) {
+    if (app.db().contacts().size() == 0) {
       app.contact().create(new ContactData()
               .withFirstname(properties.getProperty("web.firstName")).withMiddlename(properties.getProperty("web.middleName")).withLastname(properties.getProperty("web.lastName"))
               .withGroup(properties.getProperty("web.testGroupName"))
@@ -33,7 +33,7 @@ public class ContactModificationTests extends TestBase {
   public void testContactModification() throws Exception {
     properties = new Properties();
     properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     ContactData modifiedContact = before.iterator().next();
     ContactData contact = new ContactData().
             withId(modifiedContact.getId())
@@ -43,7 +43,7 @@ public class ContactModificationTests extends TestBase {
     app.contact().modify(contact);
     app.goTo().HomePage();
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
 

@@ -20,6 +20,7 @@ public class ApplicationManger {
   private GroupHelper groupHelper;
   private ContactHelper contactHelper;
   private String browser;
+  private DbHelper dbHelper;
 
   public ApplicationManger(String browser) {
     this.browser = browser;
@@ -29,6 +30,9 @@ public class ApplicationManger {
   public void init() throws IOException {
     String target = System.getProperty("target","local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+
+    dbHelper = new DbHelper();
+
     if (browser.equals(BrowserType.FIREFOX)) {
       webDriver = new FirefoxDriver();
     } else if (browser.equals(BrowserType.CHROME)) {
@@ -65,4 +69,7 @@ public class ApplicationManger {
     return contactHelper;
   }
 
+  public DbHelper db() {
+    return dbHelper;
+  }
 }

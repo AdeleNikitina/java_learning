@@ -21,7 +21,7 @@ public class ContactDeletionTestsFromMenu extends TestBase {
   public void ensurePreconditions() throws IOException {
     properties = new Properties();
     properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
-    if (app.contact().all().size() == 0) {
+    if (app.db().contacts().size() == 0) {
       app.contact().create(new ContactData()
               .withFirstname(properties.getProperty("web.firstName")).withMiddlename(properties.getProperty("web.middleName")).withLastname(properties.getProperty("web.lastName"))
               .withGroup(properties.getProperty("web.testGroupName"))
@@ -33,12 +33,12 @@ public class ContactDeletionTestsFromMenu extends TestBase {
   // Удаление через главную страницу
   @Test
   public void testContactDeletionFromMenu() throws Exception {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     ContactData deletedContact = before.iterator().next();
     app.contact().deleteFromMenu(deletedContact);
     app.goTo().HomePageFromMenu();
     assertThat(app.contact().count(), equalTo(before.size() - 1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(deletedContact)));
   }
 

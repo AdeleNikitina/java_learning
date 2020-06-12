@@ -15,6 +15,22 @@ import java.util.Objects;
 @Entity
 @Table (name = "group_list")
 public class GroupData {
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    GroupData groupData = (GroupData) o;
+    return id == groupData.id &&
+            Objects.equals(name, groupData.name) &&
+            Objects.equals(header, groupData.header) &&
+            Objects.equals(footer, groupData.footer);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, header, footer);
+  }
+
   @XStreamOmitField
   @Id
   @Column (name = "group_id")
@@ -63,20 +79,6 @@ public class GroupData {
   public String getHeader() { return header; }
 
   public String getFooter() { return footer; }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    GroupData groupData = (GroupData) o;
-    return id == groupData.id &&
-            Objects.equals(name, groupData.name);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name);
-  }
 
   @Override
   public String toString() {
