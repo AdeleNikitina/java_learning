@@ -27,7 +27,7 @@ public class ContactHelper extends HelperBase {
     properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
     initCreateContact();
     File photo = new File(properties.getProperty("web.File"));
-    fillContactInfo(contact, true);
+    fillContactInfo(contact, false);
     save();
     contactCache = null;
   }
@@ -77,14 +77,17 @@ public class ContactHelper extends HelperBase {
     type(By.name("mobile"), contactData.getMobile());
     type(By.name("email"), contactData.getEmail());
     if (creation) {
-      select(By.name("new_group"), contactData.getGroup());
-    } else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
+      if (contactData.getGroups().size() > 0) {
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+        select(By.name("new_group"), contactData.getGroups().iterator().next().getName());
+      } else {
+        Assert.assertFalse(isElementPresent(By.name("new_group")));
+      }
     }
   }
 
   // Добавить прозвище
-  public void fillNickname(String nickname) {
+  public void fillNickname (String nickname) {
     type(By.name("nickname"), nickname);
   }
 

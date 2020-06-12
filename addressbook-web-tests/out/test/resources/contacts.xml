@@ -3,27 +3,27 @@
     <firstname>FirstName 0</firstname>
     <middlename>MiddleName 0</middlename>
     <lastname>LastName 0</lastname>
-    <group>TestGroup1</group>
     <address>Address 0</address>
     <mobile>7900000000</mobile>
     <email>test0@test.ru</email>
+    <groups/>
   </contact>
   <contact>
     <firstname>FirstName 1</firstname>
     <middlename>MiddleName 1</middlename>
     <lastname>LastName 1</lastname>
-    <group>TestGroup1</group>
     <address>Address 1</address>
     <mobile>7900000001</mobile>
     <email>test1@test.ru</email>
+    <groups/>
   </contact>
   <contact>
     <firstname>FirstName 2</firstname>
     <middlename>MiddleName 2</middlename>
     <lastname>LastName 2</lastname>
-    <group>TestGroup1</group>
     <address>Address 2</address>
     <mobile>7900000002</mobile>
     <email>test2@test.ru</email>
+    <groups/>
   </contact>
 </list>
