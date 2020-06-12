@@ -50,7 +50,6 @@ public class ContactCreationTest extends TestBase {
 
   @Test (dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
-
     app.goTo().HomePageFromMenu();
     Contacts before = app.db().contacts();
     app.contact().create(contact);

@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.FileReader;
@@ -177,4 +178,24 @@ public class ContactHelper extends HelperBase {
     return new Contacts(contactCache);
   }
 
+  public void addContactToGroup(ContactData contact, GroupData group) {
+    selectContact(contact.getId());
+    select(By.name("to_group"), group.getName());
+    clickAddToGroup();
+  }
+
+  public void remoteContactToGroup(GroupData remotedGroup, ContactData contact) {
+    select(By.name("group"), remotedGroup.getName());
+    selectContact(contact.getId());
+    clickRemoteFromGroup();
+  }
+
+  public void clickAddToGroup()
+  {
+    webDriver.findElement(By.name("add")).click();
+  }
+  
+  private void clickRemoteFromGroup() {
+    webDriver.findElement(By.name("remove")).click();
+  }
 }
