@@ -17,6 +17,7 @@ public class ApplicationManger {
   private final Properties properties;
   private String browser;
   private RegistrationHelper registrationHelper;
+  private FtpHelper ftp;
 
   public ApplicationManger(String browser) {
     this.browser = browser;
@@ -49,6 +50,12 @@ public class ApplicationManger {
     return registrationHelper;
   }
 
+  public FtpHelper ftp() {
+    if (ftp == null) {
+      ftp =  new FtpHelper(this);
+    }
+    return ftp;
+  }
   public WebDriver getDriver() {
     if (webDriver == null) {
       if (browser.equals(BrowserType.FIREFOX)) {

@@ -13,6 +13,6 @@ public class RegistrationHelper {
   }
 
   public void start(String username, String email) {
-    webDriver.get(app.getProperty("web.baseUrl") + "/signup_page.php");
+    webDriver.get(app.getProperty("web.baseUrl") + "signup_page.php");
   }
 }
