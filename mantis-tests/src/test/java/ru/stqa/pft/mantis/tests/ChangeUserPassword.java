@@ -8,7 +8,14 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 
+import static org.testng.Assert.assertTrue;
+
 public class ChangeUserPassword extends TestBase {
+
+  //@BeforeMethod
+  //public void startMailServer(){
+  //app.mail().start();
+  //}
 
   @Test
   public void testChangePassword() throws IOException, MessagingException {
@@ -20,9 +27,11 @@ public class ChangeUserPassword extends TestBase {
     app.goTo().UserPage();
     app.goTo().resetPassword();
     app.uiSession().logout();
-    List<MailMessage> mailMessages = app.james().waitForMail("root", "root", 60000);
+    //List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
+    List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);
     String confirmationLink = findConfirmationLink(mailMessages, email);
     app.registration().finish(confirmationLink, password);
+    assertTrue(app.newSession().login(user, password));
   }
 
 
@@ -31,5 +40,10 @@ public class ChangeUserPassword extends TestBase {
     VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
     return regex.getText(mailMessage.text);
   }
+
+  //@AfterMethod (alwaysRun = true)
+  //public void stopMailServer(){
+  //app.mail().stop();
+  //}
 
 }
