@@ -20,6 +20,8 @@ public class ApplicationManger {
   private FtpHelper ftp;
   private MailHelper mailHelper;
   private JamesHelper jamesHelper;
+  private NavigationHelper navigationHelper;
+  private UISession uiSession;
 
   public ApplicationManger(String browser) {
     this.browser = browser;
@@ -87,4 +89,19 @@ public class ApplicationManger {
     }
     return webDriver;
   }
+
+  public NavigationHelper goTo() {
+    if (navigationHelper == null) {
+      navigationHelper =  new NavigationHelper(this);
+    }
+    return navigationHelper;
+  }
+
+  public UISession uiSession() {
+    if (uiSession == null) {
+      uiSession =  new UISession(this);
+    }
+    return uiSession;
+  }
+
 }
