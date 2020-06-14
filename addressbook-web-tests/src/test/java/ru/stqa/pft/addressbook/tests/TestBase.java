@@ -1,8 +1,13 @@
 package ru.stqa.pft.addressbook.tests;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import org.apache.http.client.fluent.Executor;
+import org.apache.http.client.fluent.Request;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -13,6 +18,7 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -66,6 +72,28 @@ public class TestBase {
               .map((c) -> new ContactData().withId(c.getId()).withFirstname(c.getFirstname())
               .withLastname(c.getLastname()))
               .collect(Collectors.toSet())));
+    }
+  }
+
+  private Executor getExecutor() {
+    return Executor.newInstance().auth("19ce16e741b7cc860c7418001642e2b4","");
+  }
+
+  public boolean isBugifyIssueOpen(int issueId) throws IOException {
+    String json = getExecutor().execute(Request.Get("http://demo.bugify.com/api/issues/" + issueId + ".json"))
+            .returnContent().asString();
+    JsonElement parsedIssue = new JsonParser().parse(json);
+    System.out.println(parsedIssue);
+    String issueStatus  = parsedIssue.getAsJsonObject().get("state_name").getAsString();
+    if (issueStatus.equals("Deleted")) {
+      return false;
+    }
+    return true;
+  }
+
+  public void skipIfNotFixedInBugify(int issueId) throws IOException {
+    if (isBugifyIssueOpen(issueId)) {
+      throw new SkipException("Ignored because of issue " + issueId);
     }
   }
 

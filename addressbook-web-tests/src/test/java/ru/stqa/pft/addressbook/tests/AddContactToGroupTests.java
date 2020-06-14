@@ -40,6 +40,7 @@ public class AddContactToGroupTests extends TestBase {
 
   @Test
   public void addContactToGroup() throws IOException {
+    skipIfNotFixedInBugify(1);
     properties = new Properties();
     properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
     // выбираем контакт, который будем добавлять в группы
