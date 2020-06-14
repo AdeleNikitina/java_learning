@@ -22,6 +22,7 @@ public class ApplicationManger {
   private JamesHelper jamesHelper;
   private NavigationHelper navigationHelper;
   private UISession uiSession;
+  private SoapHelper soapHelper;
 
   public ApplicationManger(String browser) {
     this.browser = browser;
@@ -73,6 +74,13 @@ public class ApplicationManger {
       jamesHelper =  new JamesHelper(this);
     }
     return jamesHelper;
+  }
+
+  public SoapHelper soap() {
+    if (soapHelper == null) {
+      soapHelper =  new SoapHelper(this);
+    }
+    return soapHelper;
   }
 
   public WebDriver getDriver() {
