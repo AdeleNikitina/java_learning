@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.model.MailMessage;
 
 import javax.mail.MessagingException;
+import javax.xml.rpc.ServiceException;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,7 +20,8 @@ public class ChangeUserPassword extends TestBase {
   }
 
   @Test
-  public void testChangePassword() throws IOException, MessagingException {
+  public void testChangePassword() throws IOException, MessagingException, ServiceException {
+    skipIfNotFixed(0000001);
     String user = app.getProperty("web.user");
     String email = app.getProperty("web.email");
     String password = "root";
