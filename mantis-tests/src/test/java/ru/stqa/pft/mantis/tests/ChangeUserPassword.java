@@ -4,6 +4,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.model.MailMessage;
+import ru.stqa.pft.mantis.model.UserData;
+import ru.stqa.pft.mantis.model.Users;
 
 import javax.mail.MessagingException;
 import javax.xml.rpc.ServiceException;
@@ -21,9 +23,10 @@ public class ChangeUserPassword extends TestBase {
 
   @Test
   public void testChangePassword() throws IOException, MessagingException, ServiceException {
-    skipIfNotFixed(0000001);
-    String user = app.getProperty("web.user");
-    String email = app.getProperty("web.email");
+    //skipIfNotFixed(0000001);
+    Users users = app.db().users();
+    UserData user = users.iterator().next();
+    String email = user.getEmail();
     String password = "root";
     app.uiSession().loginFromUI();
     app.goTo().manageUsersPage();
@@ -34,7 +37,7 @@ public class ChangeUserPassword extends TestBase {
     //List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);
     String confirmationLink = app.mail().findConfirmationLink(mailMessages, email);
     app.registration().finish(confirmationLink, password);
-    assertTrue(app.newSession().login(user, password));
+    assertTrue(app.newSession().login(user.getUsername(), password));
   }
 
   @AfterMethod (alwaysRun = true)

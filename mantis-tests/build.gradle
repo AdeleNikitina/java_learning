@@ -14,6 +14,9 @@ dependencies {
     implementation 'ru.lanwen.verbalregex:java-verbal-expressions:1.6'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'biz.futureware.mantis:mantis-axis-soap-client:1.2.19'
+    implementation 'org.hibernate:hibernate-core:5.4.14.Final'
+    compile 'com.thoughtworks.xstream:xstream:1.4.8'
+
 }
 
 test {

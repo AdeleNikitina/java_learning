@@ -23,6 +23,7 @@ public class ApplicationManger {
   private NavigationHelper navigationHelper;
   private UISession uiSession;
   private SoapHelper soapHelper;
+  private DbHelper dbHelper;
 
   public ApplicationManger(String browser) {
     this.browser = browser;
@@ -81,6 +82,10 @@ public class ApplicationManger {
       soapHelper =  new SoapHelper(this);
     }
     return soapHelper;
+  }
+
+  public DbHelper db() {
+    return dbHelper;
   }
 
   public WebDriver getDriver() {
