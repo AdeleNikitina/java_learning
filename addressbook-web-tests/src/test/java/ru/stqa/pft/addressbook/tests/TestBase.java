@@ -84,8 +84,11 @@ public class TestBase {
             .returnContent().asString();
     JsonElement parsedIssue = new JsonParser().parse(json);
     System.out.println(parsedIssue);
-    String issueStatus  = parsedIssue.getAsJsonObject().get("state_name").getAsString();
-    if (issueStatus.equals("Deleted")) {
+    String issueStatus  = parsedIssue.getAsJsonObject().get("issues")
+            .getAsJsonArray().get(0).getAsJsonObject().get("state_name")
+            .toString().replace("\"", "");
+    System.out.println(issueStatus);
+    if (issueStatus.equals("Resolved")) {
       return false;
     }
     return true;
