@@ -42,26 +42,32 @@ public class RemoveContactFromGroupTests extends TestBase {
   public void removeContactToGroup() throws IOException {
     properties = new Properties();
     properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
-    // выбираем контакт, который будем добавлять в группы
     Contacts contacts = app.db().contacts();
-    ContactData contact = contacts.iterator().next();
-    // смотрим какие группы есть и все ли добавлены
-    Groups addedGroups = contact.getGroups();
-    Groups existGroups = app.db().groups();
+    Groups groups = app.db().groups();
+    ContactData removedContact = null;
+    GroupData removedGroup = null;
 
-    if (addedGroups.size() == 0) {
-      GroupData groupAdd = existGroups.iterator().next();
-      app.contact().addContactToGroup(contact, groupAdd);
-      addedGroups.add(groupAdd);
-      app.goTo().HomePageFromMenu();
+    for (ContactData contact : contacts) {
+      Groups contactGroups = contact.getGroups();
+      if (contactGroups.size() == 0) {
+        GroupData groupAdd = groups.iterator().next();
+        app.contact().addContactToGroup(contact, groupAdd);
+        contactGroups.add(groupAdd);
+        app.goTo().HomePageFromMenu();
+      }
+      for (GroupData group : groups) {
+        if (contactGroups.contains(group)) {
+          removedGroup = group;
+          removedContact = contact;
+        }
+      }
     }
-    while (addedGroups.size() != 0) {
-      GroupData remotedGroup = addedGroups.iterator().next();
-            app.contact().remoteContactToGroup(remotedGroup, contact);
-      addedGroups.remove(remotedGroup);
-      app.goTo().HomePageFromMenu();
-    }
-    assertThat(contact.getGroups(), equalTo(addedGroups));
+
+    app.goTo().HomePageFromMenu();
+    app.contact().remoteContactToGroup(removedGroup, removedContact);
+    ContactData finalRemovedContact = removedContact;
+    Groups after = app.db().contacts().stream().filter((s) -> s.equals(finalRemovedContact)).findFirst().get().getGroups();;
+    assertThat(removedContact.getGroups(), equalTo(after));
 
   }
 }

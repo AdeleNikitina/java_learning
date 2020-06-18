@@ -39,38 +39,35 @@ public class AddContactToGroupTests extends TestBase {
   }
 
   @Test
-  public void addContactToGroup() throws IOException {
-    skipIfNotFixedInBugify(100);
+  public void addContactToGroupNew() throws IOException {
     properties = new Properties();
     properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
-    // выбираем контакт, который будем добавлять в группы
     Contacts contacts = app.db().contacts();
-    ContactData contact = contacts.iterator().next();
-    // смотрим какие группы есть и все ли добавлены
-    Groups addedGroups = contact.getGroups();
-    Groups existGroups = app.db().groups();
-    Groups notAddedGroups = new Groups();
+    Groups groups = app.db().groups();
+    ContactData addedContact = null;
+    GroupData addedGroup = null;
 
-    if (addedGroups == existGroups ) {
-      app.goTo().groupPage();
-      GroupData newGroup = new GroupData().withName(properties.getProperty("web.testGroupName"));
-      app.group().create(newGroup);
-      existGroups = app.db().groups();
-    }
-
-    for (GroupData group : existGroups)  {
-      if (!addedGroups.contains(group)) {
-        notAddedGroups.add(group);
+    for (ContactData contact : contacts) {
+      Groups contactGroups = contact.getGroups();
+      for (GroupData group : groups) {
+        if (!contactGroups.contains(group)) {
+          addedGroup = group;
+          addedContact = contact;
+        } else {
+          app.goTo().groupPage();
+          addedGroup = new GroupData().withName(properties.getProperty("web.testGroupName"));
+          app.group().create(addedGroup);
+          addedContact = contacts.iterator().next();
+        }
       }
     }
-    System.out.println(notAddedGroups);
-    while (notAddedGroups.size() != 0) {
-      GroupData groupAdd = notAddedGroups.iterator().next();
-      app.contact().addContactToGroup(contact, groupAdd);
-      notAddedGroups.remove(groupAdd);
-      app.goTo().HomePageFromMenu();
-    }
-    assertThat(contact.getGroups(), equalTo(addedGroups));
+
+    app.goTo().HomePageFromMenu();
+    app.contact().addContactToGroup(addedContact, addedGroup);
+    app.goTo().HomePageFromMenu();
+    ContactData finalAddedContact = addedContact;
+    Groups after = app.db().contacts().stream().filter((s) -> s.equals(finalAddedContact)).findFirst().get().getGroups();;
+    assertThat(addedContact.getGroups(), equalTo(after));
   }
 }
 
